@@ -35,7 +35,7 @@
         <nav id="nav_f" class="default_color" role="navigation">
             <div class="container">
                 <div class="nav-wrapper">
-                    <a href="#" id="logo-container" class="brand-logo"><img class="bucket-logo" src="img/bucketit.png"/></a>
+                    <a href="#" id="logo-container" class="brand-logo"><img class="bucket-logo" src="img/bucketit.png" /></a>
                     <ul class="right hide-on-med-and-down">
                         <li><a href="#intro">Home</a></li>
                         <li><a href="#view">My Bucket</a></li>
@@ -87,10 +87,10 @@
                 <div class="col s12 m4 l4" ng-repeat="x in buck.buckets">
                     <ul class="collection with-header">
                         <div class="collection-header">
-                            <h4>{{ x.bucketName }} <a ng-click="removeBucket(x.bucketId)"><i class="material-icons red-text right">clear</i></a><a href="#addBucketList" ng-click="getBucketId(x.bucketId)"><i class="material-icons green-text right">add</i></a></h4>
+                            <h4><a href="#editBucket" ng-click="getBucketId(x.bucketId)">{{ x.bucketName }}</a> <a ng-click="removeBucket(x.bucketId)"><i class="material-icons red-text right">clear</i></a><a href="#addBucketList" ng-click="getBucketId(x.bucketId)"><i class="material-icons green-text right">add</i></a></h4>
                         </div>
-                        <li class="collection-item">
-                            <div>{{ x.bucketId }}<a href="#!" class="secondary-content"><i class="material-icons red-text">remove</i></a></div>
+                        <li class="collection-item" ng-repeat="y in x.items">
+                            <div>{{ y.content }}<a ng-click="removeBucketItem(x.bucketId,y.itemId)" class="secondary-content"><i class="material-icons red-text">remove</i></a></div>
                         </li>
                     </ul>
                 </div>
@@ -126,17 +126,6 @@
                             <label for="name">Bucket Name</label>
                         </div>
                     </div>
-                    <!--
-                    <div class="row">
-                        <a onclick="myfun();">List</a>
-                        <div id="wrapper">
-                            <div class="input-field col s4">
-                                <input name="list[]" type="text" validate>
-                            </div>
-                        </div>
-                    </div>
-                    <a id="add_button" class="btn-floating waves-effect waves-light red"><i class="material-icons">add</i></a>
--->
                 </form>
             </div>
         </div>
@@ -146,6 +135,26 @@
         </div>
     </div>
 
+    <!-- Add Bucket List Modal -->
+    <div id="editBucket" class="modal">
+        <div class="modal-content">
+            <h4>Edit Bucket</h4>
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="editName" type="text" class="validate">
+                            <label for="editName">Enter Name</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a onclick="$('#addBucketList').modal('close');" class="modal-action modal-close waves-effect waves-blue btn-flat">Close</a>
+            <a onclick="editBucket();" class="waves-effect waves-light blue btn"><i class="material-icons right">send</i>submit</a>
+        </div>
+    </div>
 
     <!-- Add Bucket List Modal -->
     <div id="addBucketList" class="modal">

@@ -8,7 +8,7 @@ var app = angular.module('viewApp', []);
 // Creating angular controller for getting Buckets using method getBucket
 app.controller('viewCtrl', function ($scope, $http) {
 
-    // Get Bucket List Method
+    // Get Bucket List Method Done
     $scope.getBucket = function () {
         if (accessT)
             $http({
@@ -22,23 +22,23 @@ app.controller('viewCtrl', function ($scope, $http) {
             });
     };
 
-    // Add Bucket List - Get ID
+    // Add Bucket List - Get ID Done
     $scope.getBucketId = function (Id) {
         bId = Id;
     };
 
-    // Remove Bucket Method
-    $scope.removeBucket = function (buckId) {
+    // Remove Bucket Item Method Done
+    $scope.removeBucketItem = function (buckId, itemId) {
         var item = document.getElementById("item");
-        var params = "bucketId=" + buckId + "&items=" + item;
+        var params = "bucketId=" + buckId + "&itemId=" + itemId;
         $.ajax({
-            type: "POST",
-            url: "http://filtershots.com:8080/bucket/",
+            type: "DELETE",
+            url: "http://filtershots.com:8080/item",
             data: params,
             headers: {
                 'accessToken': accessT
             },
-            success: function () {
+            success: function (data) {
                 setTimeout(function () {
                     location.reload();
                 }, 3000);
@@ -49,9 +49,62 @@ app.controller('viewCtrl', function ($scope, $http) {
             }
         });
     };
+
+
+    // Remove Bucket Method Done
+    $scope.removeBucket = function (buckId) {
+        var item = document.getElementById("item");
+        var params = "bucketId=" + buckId;
+        $.ajax({
+            type: "DELETE",
+            url: "http://filtershots.com:8080/bucket",
+            data: params,
+            headers: {
+                'accessToken': accessT
+            },
+            success: function (data) {
+                setTimeout(function () {
+                    location.reload();
+                }, 3000);
+                Materialize.toast("Successfully removed Bucket", 3000, "red lighten-2 rounded");
+            },
+            error: function (json) {
+                console.log("Bucket Delete Error: " + json);
+            }
+        });
+    };
 });
 
-// Adding Bucket
+// Edit Bucket Done
+function editBucket() {
+    var url = "http://filtershots.com:8080/bucket";
+    var n = document.getElementById("editName");
+    n = n.value;
+    var params = "bucketId=" + bId + "&bucketName=" + n;
+    if (n) {
+        $.ajax({
+            type: "PUT",
+            url: url,
+            data: params,
+            headers: {
+                'accessToken': accessT
+            },
+            success: function (data) {
+                setTimeout(function () {
+                    location.reload();
+                }, 3000);
+                console.log(data);
+                Materialize.toast("Successfully Edited Bucket", 3000, "green lighten-2 rounded");
+            }
+        });
+        setTimeout(function () {
+            location.reload();
+        }, 3000);
+    } else
+        Materialize.toast("Fields can't be empty", 5000, "red lighten-1 rounded");
+}
+
+// Adding Bucket Done
 function addBucket() {
     var url = "http://filtershots.com:8080/bucket";
     var n = document.getElementById("name");
@@ -73,18 +126,18 @@ function addBucket() {
         setTimeout(function () {
             location.reload();
         }, 3000);
-        Materialize.toast("Successfully Added", 5000, "green lighten-2 rounded");
+        Materialize.toast("Successfully Added", 3000, "green lighten-2 rounded");
 
     } else
         Materialize.toast("Fields can't be empty", 5000, "red lighten-1 rounded");
 }
 
-// Adding Bucket List
+// Adding Bucket List Done
 function addBucketList() {
     var c = document.getElementById("list");
     c = c.value;
-    var url = "http://filtershots.com:8080/bucket";
-    var params = "bucketId=" + bId + "&items=" + c;
+    var url = "http://filtershots.com:8080/item";
+    var params = "bucketId=" + bId + "&content=" + c;
     if (c && bId) {
         $.ajax({
             type: "POST",
@@ -92,13 +145,15 @@ function addBucketList() {
             data: params,
             headers: {
                 'accessToken': accessT
+            },
+            success: function (data) {
+                setTimeout(function () {
+                    location.reload();
+                }, 3000);
+                console.log(data);
+                Materialize.toast("Successfully Added List", 3000, "green lighten-2 rounded");
             }
         });
-        setTimeout(function () {
-            location.reload();
-        }, 3000);
-        Materialize.toast("Successfully Added", 5000, "green lighten-2 rounded");
-
     } else
         Materialize.toast("Some Problem with your entry", 5000, "red lighten-1 rounded");
 }
@@ -106,7 +161,6 @@ function addBucketList() {
 // Get Cookies and Set access tokens
 function initToken(data) {
     accessT = data;
-    console.log("Inside initToken: ", accessT);
     document.cookie = "accessToken?" + accessT;
 }
 
@@ -120,10 +174,8 @@ function onSignIn(googleUser) {
     var url = "http://filtershots.com:8080/googleLogin";
     $.post(url, token,
         function (data, status) {
-            console.log("Data: " + data.accessToken + "\nStatus: " + status);
             initToken(data.accessToken);
             $('#add,#signout').show();
-            console.log("Added Plus & Signout");
             location.reload();
         });
 }
@@ -153,7 +205,6 @@ function signOut() {
         var x = document.cookie;
         if (x.indexOf("accessToken?") >= 0) {
             accessT = x.substring(x.lastIndexOf('?') + 1);
-            console.log("Access Token: " + accessT);
             $('#gbtn').hide();
             $('.innerView,#add,#signout').show();
             setTimeout(function () {
@@ -161,27 +212,8 @@ function signOut() {
                     scrollTop: $("#view").offset().top
                 }, 2000);
             }, 1000);
-            console.log("Added Plus & Signout");
             angular.element(document.getElementById('view')).scope().getBucket();
         }
-
-        // Form Control
-        //        var max_fields = 10; //maximum input boxes allowed
-        //
-        //        var x = 1; //initlal text box count
-        //        $("#add_button").click(function (e) { //on add input button click
-        //            e.preventDefault();
-        //            if (x < max_fields) { //max input box allowed
-        //                x++; //text box increment
-        //                $("#wrapper").append('<div class="input-field col s4"><input name="list[]" type="text" validate><a href="#" class="remove_field">Remove</a></div>'); //add input box
-        //            }
-        //        });
-        //
-        //        $(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
-        //            e.preventDefault();
-        //            $(this).parent('div').remove();
-        //            x--;
-        //        });
 
         /*** Animate word ***/
 
@@ -483,17 +515,3 @@ function signOut() {
         // });
     }); // end of document ready
 })(jQuery); // end of jQuery name space
-
-
-
-// Search for parameters in url
-if (window.location.href.indexOf("view=") > -1) {
-    var url = $(location).attr("href");
-    var id = url.substring(url.lastIndexOf('=') + 1);
-    console.log(id);
-}
-
-function myfun() {
-    var x = document.getElementById("wrapper");
-    console.log(x);
-}
