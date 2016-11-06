@@ -103,12 +103,14 @@ function addBucketList() {
         Materialize.toast("Some Problem with your entry", 5000, "red lighten-1 rounded");
 }
 
+// Get Cookies and Set access tokens
 function initToken(data) {
     accessT = data;
     console.log("Inside initToken: ", accessT);
     document.cookie = "accessToken?" + accessT;
 }
 
+// Google SignIn Call
 function onSignIn(googleUser) {
     $('#gbtn').hide();
     var profile = googleUser.getBasicProfile();
@@ -126,6 +128,7 @@ function onSignIn(googleUser) {
         });
 }
 
+// Google SignOut Trigger
 function signOut() {
     document.cookie = "";
     var auth2 = gapi.auth2.getAuthInstance();
@@ -134,6 +137,8 @@ function signOut() {
     });
     location.reload();
 }
+
+// On window load
 (function ($) {
     $(function () {
 

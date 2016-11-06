@@ -318,3 +318,8 @@ footer.page-footer {
     top: 50%;
     -moz-transform: translate(-50%, -50%) -webkit-transform: translate(-50%, -50%) -ms-transform: translate(-50%, -50%) -o-transform: translate(-50%, -50%) transform: translate(-50%, -50%);
 }
+
+.bucket-logo {
+    width: 100px;
+    height: 100px;
+}
