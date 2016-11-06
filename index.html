@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+    <title>IDE</title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+</head>
+
+<body>
+    <nav class="light-blue lighten-1" role="navigation">
+        <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">IDE</a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="#">Home</a></li>
+            </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+                <li><a href="#">Home</a></li>
+            </ul>
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+    <div class="section no-pad-bot" id="index-banner">
+        <div class="container">
+            <br><br>
+            <h1 class="header center blue-text">Hola Coder !!</h1>
+            <br><br>
+
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="section">
+            <!--   Icon Section   -->
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="code" class="materialize-textarea"></textarea>
+                            <label for="code">Enter your code in here</label>
+                        </div>
+                    </div>
+<!--
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="input" type="text" class="materialize-textarea" />
+                            <label for="input">Enter input</label>
+                        </div>
+                    </div>
+-->
+                    <button onclick="checkCode();" class="btn waves-effect waves-light blue" type="submit" name="action">Detect Language
+                        <i class="material-icons right">send</i>
+                    </button>
+                    <br><br>
+                    <h4><a href="" id="link"></a></h4>
+                </div>
+            </div>
+        </div>
+        <br><br>
+    </div>
+
+    <footer class="page-footer blue">
+        <div class="container" style="color:white;">
+            Made by Crash Test Dummies
+        </div>
+    </footer>
+
+
+    <!--  Scripts-->
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
