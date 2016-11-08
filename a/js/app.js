@@ -4,7 +4,8 @@ var accessT = '';
 var bId = '';
 // Creating angular app : viewApp
 var app = angular.module('viewApp', []);
-
+var shareId = '';
+var shareData = '';
 // Creating angular controller for getting Buckets using method getBucket
 app.controller('viewCtrl', function ($scope, $http) {
 
@@ -41,7 +42,7 @@ app.controller('viewCtrl', function ($scope, $http) {
             success: function (data) {
                 setTimeout(function () {
                     location.reload();
-                }, 3000);
+                }, 1000);
                 Materialize.toast("Successfully removed Bucket", 5000, "red lighten-2 rounded");
             },
             error: function (json) {
@@ -65,7 +66,7 @@ app.controller('viewCtrl', function ($scope, $http) {
             success: function (data) {
                 setTimeout(function () {
                     location.reload();
-                }, 3000);
+                }, 1000);
                 Materialize.toast("Successfully removed Bucket", 3000, "red lighten-2 rounded");
             },
             error: function (json) {
@@ -92,14 +93,14 @@ function editBucket() {
             success: function (data) {
                 setTimeout(function () {
                     location.reload();
-                }, 3000);
+                }, 1000);
                 console.log(data);
                 Materialize.toast("Successfully Edited Bucket", 3000, "green lighten-2 rounded");
             }
         });
         setTimeout(function () {
             location.reload();
-        }, 3000);
+        }, 1000);
     } else
         Materialize.toast("Fields can't be empty", 5000, "red lighten-1 rounded");
 }
@@ -125,7 +126,7 @@ function addBucket() {
         });
         setTimeout(function () {
             location.reload();
-        }, 3000);
+        }, 1000);
         Materialize.toast("Successfully Added", 3000, "green lighten-2 rounded");
 
     } else
@@ -149,7 +150,7 @@ function addBucketList() {
             success: function (data) {
                 setTimeout(function () {
                     location.reload();
-                }, 3000);
+                }, 1000);
                 console.log(data);
                 Materialize.toast("Successfully Added List", 3000, "green lighten-2 rounded");
             }
@@ -515,3 +516,24 @@ function signOut() {
         // });
     }); // end of document ready
 })(jQuery); // end of jQuery name space
+
+//// Search for parameters in url
+//if (window.location.href.indexOf("view=") > -1) {
+//    var url = $(location).attr("href");
+//    shareId = url.substring(url.lastIndexOf('=') + 1);
+//    shareView();
+//}
+//// share View
+//function shareView() {
+//    $.ajax({
+//        type: "GET",
+//        url: "http://filtershots.com:8080/shared/"+shareId,
+//        headers: {
+//            'accessToken': accessT
+//        },
+//        success: function (data) {
+//            console.log(data);
+//            modal.
+//        }
+//    });
+//};
