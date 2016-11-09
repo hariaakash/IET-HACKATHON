@@ -13,6 +13,7 @@ function checkCode() {
     var code = document.getElementById("code");
 //    var input = document.getElementById("input");
     code = code.value;
+    console.log(code);
 //    input = input.value;
     if (code.indexOf("namespace") >= 0 || code.indexOf("cout") >= 0 || code.indexOf("cin") >= 0)
         lang = "C++";
@@ -47,7 +48,6 @@ function checkCode() {
                 if (data.run_status.status == "AC") {
                     Materialize.toast("Successfully Compiled", 5000, "green lighten-2 rounded");
                 } else
-                    Materialize.toast("Error Occurred when compiling !! :/", 5000, "red lighten-2 rounded");
                 document.getElementById("link").innerHTML = data.web_link;
                 document.getElementById("link").href = data.web_link;
             },
